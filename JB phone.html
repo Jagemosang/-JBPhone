@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <title>บริการ ซื้อขาย เทิร์น และ ซ่อม มือถือ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: url('assent/1.jpg') no-repeat center center/cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+        /* ทำให้ภาพพื้นหลังเบลอและดูจางลง */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            backdrop-filter: blur(15px) brightness(0.7); /* ปรับระดับเบลอและความสว่าง */
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(90deg, #00bfff, #0033cc); /* ไล่เชดสีจากน้ำเงินเข้มไปฟ้า */
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.navbar img {
+    height: 25px;
+    margin-right: 10px;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #000, #ffffff); /* สีดำไล่ไปเทา */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: auto;
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto; /* ทำให้เมนูไปอยู่ทางขวาสุด */
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+        /* ปรับการตั้งค่าสำหรับหน้าปกที่มีสไลด์โชว์ */
+        .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* ใช้ 60% ของความสูงของ viewport */
+    max-height: 600px; /* ความสูงสูงสุดไม่เกิน 600px */
+    position: relative;
+    overflow: hidden;
+    margin-top: 70px; /* เว้นที่ให้กับ header */
+}
+
+.hero img {
+    width: 1000px; /* ให้ความกว้างปรับตามขนาดภาพ */
+    height: 453px; /* ความสูงเต็ม 100% ของ container */
+    object-fit: cover; /* ครอบคลุมพื้นที่โดยไม่บิดเบือนอัตราส่วน */
+    position: absolute;
+    top: 0;
+    left: 50%; /* จัดตำแหน่งภาพที่กึ่งกลาง */
+    transform: translateX(-50%); /* จัดกึ่งกลางภาพ */
+    opacity: 1; /* ให้ภาพแสดงผลทันที */
+    transition: opacity 1s ease-in-out;
+}
+
+        .hero img.active {
+            opacity: 1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-section {
+            background: rgba(255, 255, 255, 0.9); /* ใช้สีขาวโปร่งแสงเพื่อให้เห็นพื้นหลัง */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .service-image {
+        width: 100%; /* ปรับขนาดรูปให้เต็มความกว้างของกล่อง */
+        height: 200px; /* ล็อคความสูงของรูป */
+        object-fit: cover; /* ปรับรูปให้พอดีกับขนาดที่กำหนด */
+        }
+        .service-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .service-section h2 {
+            color: #0091ea;
+            margin-bottom: 1rem;
+        }
+        .service-section p {
+            line-height: 1.6;
+            color: #555;
+        }
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            color: #fff;
+            background-color: #0091ea;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #0077c2;
+            transform: scale(1.05);
+        }
+        /* โชว์รูมรายละเอียดสินค้า */
+        .product-showcase {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+        .product-showcase h2 {
+            text-align: center;
+            color: #0091ea;
+            margin-bottom: 1.5rem;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .product-item {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .product-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .product-item h3 {
+            color: #0091ea;
+            margin-bottom: 0.5rem;
+        }
+        .product-item p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        /* ส่วนแสดงความน่าเชื่อถือ */
+        .trust-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .trust-section h2 {
+            color: #0091ea;
+            margin-bottom: 1.5rem;
+        }
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .trust-item {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            text-align: center;
+        }
+        .trust-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        /* โลโก้ที่เลื่อนไปมา */
+        .logo-marquee {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 0;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        .logo-marquee div {
+            display: flex;
+            width: calc(250px * 12); /* จำนวนโลโก้ที่ใช้ x ความกว้างโลโก้ */
+            animation: marquee 20s linear infinite;
+        }
+        .logo-marquee img {
+            width: 150px; /* ล็อคขนาดโลโก้ */
+            height: 80px; /* ล็อคขนาดโลโก้ */
+            object-fit: contain; /* ให้ภาพไม่ยืดหรือบีบ */
+            margin: 0 25px;
+        }
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-250px * 6)); /* โลโก้ครึ่งหนึ่ง */
+            }
+        }
+        footer {
+            background: #101010;
+            color: #D3D3D3;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            bottom: 0;
+            text-align: left;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .footer-section p {
+            margin: 5px 0;
+        }
+
+        .footer-section i {
+            margin-right: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .social-icons a {
+            margin: 0 15px;
+            color: #D3D3D3;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #fff;
+        }
+
+        .contact-buttons {
+            background: #202020;
+            color: #D3D3D3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .contact-buttons a {
+            color: #0091ea;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .contact-buttons a:hover {
+            text-decoration: underline;
+        }
+
+        .map {
+            position: relative;
+            height: 150px;
+            margin-top: 20px;
+        }
+
+        .map iframe {
+            position: absolute;
+            width: 80%;
+            height: 100%;
+            border: 0;
+        }
+        .alert-warning {
+    background-color: #ffcc00; /* สีพื้นหลังสว่างเพื่อดึงดูดความสนใจ */
+    color: #333; /* สีข้อความ */
+    padding: 1rem;
+    text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 1rem 0; /* เว้นระยะห่างจากส่วนอื่น */
+    border-radius: 5px; /* มุมโค้งมน */
+}
+
+.warning-image {
+    width: 100%; /* ปรับขนาดความกว้างของภาพให้เต็ม container */
+    max-width: 600px; /* ความกว้างสูงสุดไม่เกิน 600px */
+    height: auto; /* ให้ความสูงปรับตามอัตราส่วน */
+    margin-bottom: 1rem; /* เพิ่มช่องว่างระหว่างภาพกับข้อความ */
+    border-radius: 5px; /* มุมโค้งมน */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้กับภาพ */
+}
+
+.alert-warning p {
+    margin: 0; /* เอาช่องว่างรอบๆ ข้อความออก */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="assent/11402-removebg-preview.png" alt="JB PHONE"> <!-- เปลี่ยนให้เป็นที่อยู่โลโก้ของคุณ -->
+            <div class="brand-name">JB PHONE</div> <!-- เพิ่มชื่อร้าน -->
+            <nav>
+                <a href="#home">หน้าแรก</a>
+                <a href="#services">บริการ</a>
+                <a href="https://www.facebook.com/share/2Bj6iqEhp34ybaHo/?mibextid=LQQJ4d">ติดต่อเรา</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- หน้าปกพร้อมสไลด์โชว์ -->
+    <div class="hero">
+        <img src="assent/11454.jpg" alt="ข่าวสาร 1" class="active">
+    </div>
+
+    <div class="service-section">
+        <h2>ซื้อขายมือถือ</h2>
+        <img src="assent/ปก.jpg" alt="ซื้อขายมือถือ" class="service-image">
+        <p>เรามีบริการซื้อขายมือถือทุกรุ่น ทั้งใหม่และมือสอง พร้อมราคาที่ดีที่สุด</p>
+        <a href="https://www.facebook.com/share/2Bj6iqEhp34ybaHo/?mibextid=LQQJ4d" class="button">สอบถามรายละเอียด</a>
+    </div>
+    <div class="service-section">
+        <h2>เทิร์นมือถือ</h2>
+        <img src="assent/ปก1.jpg" alt="เทิร์นมือถือ" class="service-image">
+        <p>รับเทิร์นมือถือทุกยี่ห้อ ราคายุติธรรม คุ้มค่าในการแลกเปลี่ยน</p>
+        <a href="https://www.facebook.com/share/2Bj6iqEhp34ybaHo/?mibextid=LQQJ4d" class="button">สอบถามรายละเอียด</a>
+    </div>
+
+    <div class="alert-warning">
+        <img src="assent/คำเตือน.jpg" alt="คำเตือนเพจปลอม" class="warning-image">
+        <p><strong>คำเตือน:</strong> ระวังเพจปลอมที่แอบอ้างชื่อของเรา โปรดตรวจสอบเพจและเบอร์โทรศัพท์ให้แน่ใจว่าตรงกับข้อมูลในเว็บไซต์นี้ก่อนทำธุรกรรมทุกครั้ง หากมีข้อสงสัย กรุณาติดต่อเราโดยตรงที่เบอร์โทรศัพท์ 095 183 2312 หรือผ่านลิงก์ที่ถูกต้องด้านล่าง</p>
+    </div>
+    
+    <!-- ส่วนแสดงความน่าเชื่อถือ -->
+    <div class="trust-section">
+        <h2>ความน่าเชื่อถือของเรา</h2>
+    </div>
+
+    <!-- โลโก้แบรนด์มือถือที่รับซ่อม -->
+    <div class="logo-marquee">
+        <div>
+            <img src="assent/11446.jpg" alt="โลโก้ Apple"> <!-- เพิ่มที่อยู่รูปภาพของคุณ -->
+            <img src="assent/11447.jpg" alt="โลโก้ Samsung">
+            <img src="assent/11448.jpg" alt="โลโก้ Huawei">
+            <img src="assent/11449.jpg" alt="โลโก้ vivo">
+            <img src="assent/11450.jpg" alt="โลโก้ Oppo">
+            <img src="assent/11451.jpg" alt="โลโก้ Realme-logo">
+            <img src="assent/11452.jpg" alt="โลโก้ Apple">
+            <img src="assent/11453.jpg" alt="โลโก้ Samsung">
+            <img src="assent/11446.jpg" alt="โลโก้ Huawei">
+            <img src="assent/11447.jpg" alt="โลโก้ Vivo">
+            <img src="assent/11448.jpg" alt="โลโก้ Oppo">
+            <img src="assent/11449.jpg" alt="โลโก้ Realme-logo">
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-section">
+            <h4>ที่อยู่</h4>
+            <p>JB PHONE<br>
+               44. ม.10<br>
+               ต.รอบเมือง อ.หนองพอก จ.ร้อยเอ็ด<br>
+               45210</p>
+        </div>
+        <div class="footer-section">
+            <h4>ติดต่อเรา</h4>
+            <p><i class="fas fa-phone-alt"></i> โทรศัพท์: 095 183 2312</p>
+            <p><i class="fab fa-facebook"></i> Watcharapong Chotwut</p>
+
+        </div>
+        <div class="footer-section map">
+            <iframe
+             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d478.6567255311176!2d104.20537778706431!3d16.309970941905785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313d772d801f579d%3A0x4292b3e4d0555ae2!2z4Lij4LmJ4Liy4LiZIEpCIFBIT05FIOC4q-C4meC4reC4h-C4nuC4reC4gQ!5e0!3m2!1sth!2sth!4v1724309544338!5m2!1sth!2sth" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</iframe>
+</div>
+</footer>
+
+<button class="scroll-to-top"><i class="fas fa-arrow-up"></i></button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+<!-- Contact Buttons Section -->
+<div class="contact-buttons">
+<a href="https://www.facebook.com/share/2Bj6iqEhp34ybaHo/?mibextid=LQQJ4d"><i class="fab fa-facebook-f"></i>Facebook</a> 
+<a href="#"><i class="fas fa-phone-alt">0951832312</i>Call Us</a>
+</div>
+</body>
+</html>
